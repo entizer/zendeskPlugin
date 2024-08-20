@@ -36,7 +36,7 @@ class ZenDeskTaskProviderCreateTicket implements TaskProvider {
 
 	@Override
 	ExecutableTaskInterface getService() {
-		return new ZenDeskTaskService(morpheus)
+		return new ZenDeskTaskServiceTicket(morpheus)
 	}
 
 	@Override
@@ -76,7 +76,7 @@ class ZenDeskTaskProviderCreateTicket implements TaskProvider {
 
 	@Override
 	Boolean isAllowLocalRepo() {
-		return true
+		return false
 	}
 
 	@Override
@@ -100,47 +100,47 @@ class ZenDeskTaskProviderCreateTicket implements TaskProvider {
 			name: 'zenDeskTargetUrl',
 			code: 'zenDeskTargetUrl',
 			fieldName: 'zenDeskTargetUrl',
-			optionSource: true,
 			displayOrder: 0,
 			fieldLabel: 'Target URL',
 			required: true,
+			helpText: 'Enter the base URL of the ZenDesk instance, for example:  https://domain.zendesk.com',
 			inputType: OptionType.InputType.TEXT)
 		)
 		optionTypes.add(new OptionType(
 			name: 'zenDeskAuthUsername',
 			code: 'zenDeskAuthUsername',
 			fieldName: 'zenDeskAuthUsername',
-			optionSource: true,
 			displayOrder: 1,
 			fieldLabel: 'Auth Username',
 			required: true,
-			inputType: OptionType.InputType.TEXT)
+			inputType: OptionType.InputType.TEXT,
+			placeHolderText: "username@domain.com",
+			helpText: "Should NOT include /token")
 		)
 		optionTypes.add(new OptionType(
 			name: 'zenDeskAuthApiToken',
 			code: 'zenDeskAuthApiToken',
 			fieldName: 'zenDeskAuthApiToken',
-			optionSource: true,
 			displayOrder: 2,
 			fieldLabel: 'Auth API Token',
 			required: true,
-			inputType: OptionType.InputType.PASSWORD)
+			inputType: OptionType.InputType.PASSWORD,
+			helpText: "Generated for a user")
 		)
 		optionTypes.add(new OptionType(
 			name: 'zenDeskPriority',
 			code: 'zenDeskPriority',
 			fieldName: 'zenDeskPriority',
-			optionSource: true,
 			displayOrder: 3,
 			fieldLabel: 'Priority',
 			required: true,
+			// optionSource: 'zenDeskPriorityTypeList',
 			inputType: OptionType.InputType.TEXT)
 		)
 		optionTypes.add(new OptionType(
 			name: 'zenDeskSubject',
 			code: 'zenDeskSubject',
 			fieldName: 'zenDeskSubject',
-			optionSource: true,
 			displayOrder: 4,
 			fieldLabel: 'Subject',
 			required: true,
@@ -150,7 +150,6 @@ class ZenDeskTaskProviderCreateTicket implements TaskProvider {
 			name: 'zenDeskMessageDetails',
 			code: 'zenDeskMessageDetails',
 			fieldName: 'zenDeskMessageDetails',
-			optionSource: true,
 			displayOrder: 5,
 			fieldLabel: 'Message Details',
 			required: true,

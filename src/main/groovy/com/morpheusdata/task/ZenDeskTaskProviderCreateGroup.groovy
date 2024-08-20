@@ -11,12 +11,12 @@ import com.morpheusdata.model.*
 /**
  * Example TaskProvider
  */
-class ZenDeskTaskProviderCreateObject implements TaskProvider {
+class ZenDeskTaskProviderCreateGroup implements TaskProvider {
 	MorpheusContext morpheusContext
 	Plugin plugin
 	AbstractTaskService service
 
-	ZenDeskTaskProviderCreateObject(Plugin plugin, MorpheusContext morpheusContext) {
+    ZenDeskTaskProviderCreateGroup(Plugin plugin, MorpheusContext morpheusContext) {
 		this.plugin = plugin
 		this.morpheusContext = morpheusContext
 	}
@@ -33,12 +33,12 @@ class ZenDeskTaskProviderCreateObject implements TaskProvider {
 
 	@Override
 	ExecutableTaskInterface getService() {
-		return new ZenDeskTaskService(morpheus)
+		return new ZenDeskTaskServiceGroup(morpheus)
 	}
 
 	@Override
 	String getCode() {
-		return "zenDeskCreateObject"
+		return "zenDeskCreateGroup"
 	}
 
 	@Override
@@ -48,12 +48,12 @@ class ZenDeskTaskProviderCreateObject implements TaskProvider {
 
 	@Override
 	String getName() {
-		return 'Zendesk Create Object'
+		return 'Zendesk Create Group'
 	}
 
 	@Override
 	String getDescription() {
-		return 'A custom task that creates an object in ZenDesk'
+		return 'A custom task that creates a Group in ZenDesk.  Requires authentication and a service account.'
 	}
 
 	@Override
@@ -73,7 +73,7 @@ class ZenDeskTaskProviderCreateObject implements TaskProvider {
 
 	@Override
 	Boolean isAllowLocalRepo() {
-		return true
+		return false
 	}
 
 	@Override
@@ -92,17 +92,48 @@ class ZenDeskTaskProviderCreateObject implements TaskProvider {
 	 */
 	@Override
 	List<OptionType> getOptionTypes() {
-		OptionType optionType = new OptionType(
-				name: 'zenDeskTargetUrl2',
-				code: 'zenDeskTargetUrl2',
-				fieldName: 'zenDeskTargetUrl2',
-				optionSource: true,
-				displayOrder: 0,
-				fieldLabel: 'Target URL2',
-				required: true,
-				inputType: OptionType.InputType.TEXT
+		List<OptionType> optionTypes = new ArrayList<OptionType>()
+		optionTypes.add(new OptionType(
+			name: 'zenDeskTargetUrl',
+			code: 'zenDeskTargetUrl',
+			fieldName: 'zenDeskTargetUrl',
+			displayOrder: 0,
+			fieldLabel: 'Target URL',
+			required: true,
+			helpText: 'Enter the base URL of the ZenDesk instance, for example:  https://domain.zendesk.com',
+			inputType: OptionType.InputType.TEXT)
 		)
-		return [optionType]
+		optionTypes.add(new OptionType(
+			name: 'zenDeskAuthUsername',
+			code: 'zenDeskAuthUsername',
+			fieldName: 'zenDeskAuthUsername',
+			displayOrder: 1,
+			fieldLabel: 'Auth Username',
+			required: true,
+			inputType: OptionType.InputType.TEXT,
+			placeHolderText: "username@domain.com",
+			helpText: "Should NOT include /token")
+		)
+		optionTypes.add(new OptionType(
+			name: 'zenDeskAuthApiToken',
+			code: 'zenDeskAuthApiToken',
+			fieldName: 'zenDeskAuthApiToken',
+			displayOrder: 2,
+			fieldLabel: 'Auth API Token',
+			required: true,
+			inputType: OptionType.InputType.PASSWORD,
+			helpText: "Generated for a user")
+		)
+		optionTypes.add(new OptionType(
+			name: 'zenDeskGroupName',
+			code: 'zenDeskGroupName',
+			fieldName: 'zenDeskGroupName',
+			displayOrder: 3,
+			fieldLabel: 'Group Name',
+			required: true,
+			inputType: OptionType.InputType.TEXT)
+		)
+		return optionTypes
 	}
 
 	/**
@@ -118,7 +149,6 @@ class ZenDeskTaskProviderCreateObject implements TaskProvider {
 	@Override
 	TaskResult executeLocalTask(Task task, Map map, Workload workload, ComputeServer computeServer, Instance instance) {
 		return null
-
 	}
 
 	@Override

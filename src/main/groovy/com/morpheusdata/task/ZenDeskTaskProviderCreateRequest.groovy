@@ -33,7 +33,7 @@ class ZenDeskTaskProviderCreateRequest implements TaskProvider {
 
 	@Override
 	ExecutableTaskInterface getService() {
-		return new ZenDeskTaskService(morpheus)
+		return new ZenDeskTaskServiceRequest(morpheus)
 	}
 
 	@Override
@@ -53,7 +53,7 @@ class ZenDeskTaskProviderCreateRequest implements TaskProvider {
 
 	@Override
 	String getDescription() {
-		return 'A custom task that creates a Request in ZenDesk.  Requests are similar to an email being sent.'
+		return 'A custom task that creates a Request in ZenDesk.  Does not require authentication but anonymous requests must be allowed.'
 	}
 
 	@Override
@@ -73,7 +73,7 @@ class ZenDeskTaskProviderCreateRequest implements TaskProvider {
 
 	@Override
 	Boolean isAllowLocalRepo() {
-		return true
+		return false
 	}
 
 	@Override
@@ -92,17 +92,46 @@ class ZenDeskTaskProviderCreateRequest implements TaskProvider {
 	 */
 	@Override
 	List<OptionType> getOptionTypes() {
-		OptionType optionType = new OptionType(
-				name: 'zenDeskTargetUrl',
-				code: 'zenDeskTargetUrl',
-				fieldName: 'zenDeskTargetUrl',
-				optionSource: true,
-				displayOrder: 0,
-				fieldLabel: 'Target URL',
-				required: true,
-				inputType: OptionType.InputType.TEXT
+		List<OptionType> optionTypes = new ArrayList<OptionType>()
+		optionTypes.add(new OptionType(
+			name: 'zenDeskTargetUrl',
+			code: 'zenDeskTargetUrl',
+			fieldName: 'zenDeskTargetUrl',
+			displayOrder: 0,
+			fieldLabel: 'Target URL',
+			required: true,
+			helpText: 'Enter the base URL of the ZenDesk instance, for example:  https://domain.zendesk.com',
+			inputType: OptionType.InputType.TEXT)
 		)
-		return [optionType]
+		optionTypes.add(new OptionType(
+			name: 'zenDeskPriority',
+			code: 'zenDeskPriority',
+			fieldName: 'zenDeskPriority',
+			displayOrder: 3,
+			fieldLabel: 'Priority',
+			required: true,
+			// optionSource: 'zenDeskPriorityTypeList',
+			inputType: OptionType.InputType.TEXT)
+		)
+		optionTypes.add(new OptionType(
+			name: 'zenDeskSubject',
+			code: 'zenDeskSubject',
+			fieldName: 'zenDeskSubject',
+			displayOrder: 4,
+			fieldLabel: 'Subject',
+			required: true,
+			inputType: OptionType.InputType.TEXT)
+		)
+		optionTypes.add(new OptionType(
+			name: 'zenDeskMessageDetails',
+			code: 'zenDeskMessageDetails',
+			fieldName: 'zenDeskMessageDetails',
+			displayOrder: 5,
+			fieldLabel: 'Message Details',
+			required: true,
+			inputType: OptionType.InputType.TEXTAREA)
+		)
+		return optionTypes
 	}
 
 	/**

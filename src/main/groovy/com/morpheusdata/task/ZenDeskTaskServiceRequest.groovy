@@ -2,15 +2,19 @@ package com.morpheusdata.task
 
 import com.morpheusdata.core.AbstractTaskService
 import com.morpheusdata.core.MorpheusContext
+import com.morpheusdata.core.util.HttpApiClient
 import com.morpheusdata.model.*
+import com.morpheusdata.response.ServiceResponse
+import com.morpheusdata.views.ViewModel
+import groovy.json.JsonBuilder
 
 /**
  * Example AbstractTaskService. Each method demonstrates building an example TaskConfig for the relevant task type
  */
-class ZenDeskTaskService extends AbstractTaskService {
+class ZenDeskTaskServiceRequest extends AbstractTaskService {
 	MorpheusContext context
 
-    ZenDeskTaskService(MorpheusContext context) {
+    ZenDeskTaskServiceRequest(MorpheusContext context) {
 		this.context = context
 	}
 
@@ -76,20 +80,69 @@ class ZenDeskTaskService extends AbstractTaskService {
 	}
 
 	/**
-	 * Finds the input text from the OptionType created in {@link ZenDeskTaskProviderCreateTicket#getOptionTypes}.
+	 * Finds the input text from the OptionType created in {@link ZenDeskTaskProviderCreateRequest#getOptionTypes}.
 	 * Uses Groovy {@link org.codehaus.groovy.runtime.StringGroovyMethods#reverse} on the input text
 	 * @param task
 	 * @param config
 	 * @return data and output are the reversed text
 	 */
 	TaskResult executeTask(Task task, TaskConfig config) {
-		println config.accountId
-		//def taskOption = task.taskOptions.find { it.optionType.code == 'zenDeskTargetUrl' }
-		//String data = taskOption?.value?.reverse()
-		new TaskResult(
-				success: true,
-				data   : "test",
-				output : "test"
-		)
+		// https://domain.zendesk.com
+		String zenDeskTargetUrl = task.taskOptions.find { it.optionType.code == 'zenDeskTargetUrl'}?.value
+		String apiPath = '/api/v2/requests'
+		String zenDeskPriority = task.taskOptions.find { it.optionType.code == 'zenDeskPriority'}?.value
+		String zenDeskSubject = task.taskOptions.find { it.optionType.code == 'zenDeskSubject'}?.value
+		String zenDeskMessageDetails = task.taskOptions.find { it.optionType.code == 'zenDeskMessageDetails'}?.value
+		User userinfo = new ViewModel().user
+
+//		String data = "zenDeskTargetUrl: ${zenDeskTargetUrl}" + System.lineSeparator() +
+//			"zenDeskPriority: ${zenDeskPriority}" + System.lineSeparator() +
+//			"zenDeskSubject: ${zenDeskSubject}" + System.lineSeparator() +
+//			"zenDeskMessageDetails: ${zenDeskMessageDetails}"
+
+		HttpApiClient zenDeskClient = new HttpApiClient()
+		Boolean ignoreSsl = false
+		def body = [
+			request: [
+				comment: [
+				   body: "zenDeskMessageDetails"
+				],
+			]
+		]
+		body.request.priority = zenDeskPriority
+		body.request.subject = zenDeskSubject
+		body.request.requester = [
+			name: "Korey G",
+			email: "kg-tech@hotmail.com"
+		]
+		body.request.recipient = "kg-tech@hotmail.com"
+
+		try {
+			ServiceResponse results = zenDeskClient.callJsonApi(zenDeskTargetUrl, apiPath, new HttpApiClient.RequestOptions(contentType:'application/json', ignoreSSL: ignoreSsl, body: body), 'POST')
+			String taskResultJson = new JsonBuilder(results['data']).toPrettyString()
+			if(results.success) {
+				new TaskResult(
+					success: true,
+					data: taskResultJson,
+					output: taskResultJson
+				)
+			}else{
+				new TaskResult(
+					success: false,
+					data: taskResultJson,
+					output: taskResultJson
+				)
+			}
+		} catch(e) {
+			e.printStackTrace()
+			// log.error("Get Tickets error: ${e}", e)
+			new TaskResult(
+				success: false,
+				data   : e.toString(),
+				output : e.toString()
+			)
+		} finally {
+			zenDeskClient.shutdownClient()
+		}
 	}
 }

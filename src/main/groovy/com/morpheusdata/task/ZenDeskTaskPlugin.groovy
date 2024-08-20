@@ -27,11 +27,13 @@ class ZenDeskTaskPlugin extends Plugin {
 	@Override
 	void initialize() {
 		ZenDeskTaskProviderCreateTicket createTicket = new ZenDeskTaskProviderCreateTicket(this, morpheus)
-		ZenDeskTaskProviderCreateObject createObject = new ZenDeskTaskProviderCreateObject(this, morpheus)
 		ZenDeskTaskProviderCreateRequest createRequest = new ZenDeskTaskProviderCreateRequest(this, morpheus)
+		ZenDeskTaskProviderCreateGroup createGroup = new ZenDeskTaskProviderCreateGroup(this, morpheus)
+		ZenDeskOptionSourceProvider optionSource = new ZenDeskOptionSourceProvider(this, morpheus)
 		this.pluginProviders.put(createTicket.code, createTicket)
-		this.pluginProviders.put(createObject.code, createObject)
 		this.pluginProviders.put(createRequest.code, createRequest)
+		this.pluginProviders.put(createGroup.code, createGroup)
+		this.pluginProviders.put(optionSource.code, optionSource)
 		this.setName("Zendesk Task Plugin")
 		this.setDescription("Provides interaction with ZenDesk ITSM")
 		this.setAuthor("Korey Gawronski")
@@ -48,8 +50,8 @@ class ZenDeskTaskPlugin extends Plugin {
 	@Override
 	void onDestroy() {
 		morpheus.task.disableTask('zenDeskCreateTicket').blockingGet()
-		morpheus.task.disableTask('zenDeskCreateObject').blockingGet()
 		morpheus.task.disableTask('zenDeskCreateRequest').blockingGet()
+		morpheus.task.disableTask('zenDeskCreateGroup').blockingGet()
 	}
 
 	@Override
