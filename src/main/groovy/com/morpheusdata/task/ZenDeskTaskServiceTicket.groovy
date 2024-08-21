@@ -1,4 +1,7 @@
 package com.morpheusdata.task
+
+import com.morpheusdata.core.data.DataFilter
+import com.morpheusdata.core.data.DataQuery
 import com.morpheusdata.core.util.HttpApiClient
 import com.morpheusdata.core.AbstractTaskService
 import com.morpheusdata.core.MorpheusContext
@@ -106,6 +109,9 @@ class ZenDeskTaskServiceTicket extends AbstractTaskService {
 
 		HttpApiClient zenDeskClient = new HttpApiClient()
 		Boolean ignoreSsl = false
+		AccountCredential accountInfo = context.async.accountCredential.list(
+				new DataQuery().withFilter(new DataFilter("id", config.userId)
+				)).blockingFirst()
 		def body = [
 			ticket: [
 				comment: [
@@ -116,8 +122,8 @@ class ZenDeskTaskServiceTicket extends AbstractTaskService {
 		body.ticket.priority = zenDeskPriority
 		body.ticket.subject = zenDeskSubject
 		body.ticket.requester = [
-			name: "Korey G",
-			email: "kg-tech@hotmail.com"
+			name: "${accountInfo.user.firstName} ${accountInfo.user.lastName}",
+			email: "${accountInfo.user.email}"
 		]
 		body.ticket.status = "new"
 

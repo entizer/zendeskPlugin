@@ -5,12 +5,15 @@ import com.morpheusdata.core.MorpheusContext
 import com.morpheusdata.core.util.HttpApiClient
 import com.morpheusdata.model.*
 import com.morpheusdata.response.ServiceResponse
-import com.morpheusdata.views.ViewModel
 import groovy.json.JsonBuilder
+import groovy.util.logging.Slf4j
+import com.morpheusdata.core.data.DataQuery
+import com.morpheusdata.core.data.DataFilter
 
 /**
  * Example AbstractTaskService. Each method demonstrates building an example TaskConfig for the relevant task type
  */
+@Slf4j
 class ZenDeskTaskServiceRequest extends AbstractTaskService {
 	MorpheusContext context
 
@@ -93,7 +96,6 @@ class ZenDeskTaskServiceRequest extends AbstractTaskService {
 		String zenDeskPriority = task.taskOptions.find { it.optionType.code == 'zenDeskPriority'}?.value
 		String zenDeskSubject = task.taskOptions.find { it.optionType.code == 'zenDeskSubject'}?.value
 		String zenDeskMessageDetails = task.taskOptions.find { it.optionType.code == 'zenDeskMessageDetails'}?.value
-		User userinfo = new ViewModel().user
 
 //		String data = "zenDeskTargetUrl: ${zenDeskTargetUrl}" + System.lineSeparator() +
 //			"zenDeskPriority: ${zenDeskPriority}" + System.lineSeparator() +
@@ -102,6 +104,9 @@ class ZenDeskTaskServiceRequest extends AbstractTaskService {
 
 		HttpApiClient zenDeskClient = new HttpApiClient()
 		Boolean ignoreSsl = false
+		AccountCredential accountInfo = context.async.accountCredential.list(
+				new DataQuery().withFilter(new DataFilter("id", config.userId)
+				)).blockingFirst()
 		def body = [
 			request: [
 				comment: [
@@ -112,11 +117,13 @@ class ZenDeskTaskServiceRequest extends AbstractTaskService {
 		body.request.priority = zenDeskPriority
 		body.request.subject = zenDeskSubject
 		body.request.requester = [
-			name: "Korey G",
-			email: "kg-tech@hotmail.com"
+			name: "${accountInfo.user.firstName} ${accountInfo.user.lastName}",
+			email: "${accountInfo.user.email}"
 		]
-		body.request.recipient = "kg-tech@hotmail.com"
+		body.request.recipient = accountInfo.user.email
 
+
+		// log.info("creduser: ${userInfo.user.email} ${userInfo.user.firstName} ${userInfo.user.lastName}")
 		try {
 			ServiceResponse results = zenDeskClient.callJsonApi(zenDeskTargetUrl, apiPath, new HttpApiClient.RequestOptions(contentType:'application/json', ignoreSSL: ignoreSsl, body: body), 'POST')
 			String taskResultJson = new JsonBuilder(results['data']).toPrettyString()
