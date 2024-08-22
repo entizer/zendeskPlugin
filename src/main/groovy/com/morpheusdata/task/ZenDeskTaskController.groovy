@@ -42,31 +42,31 @@ class ZenDeskTaskController implements PluginController {
 	 * @return
 	 */
 	List<Route> getRoutes() {
-		[
-			Route.build("/newPath/example", "example", Permission.build("zenDeskPlugin", "full")),
-			Route.build("/newPath/json", "json", Permission.build("zenDeskPlugin", "full"))
-		]
+//		[
+//			Route.build("/newPath/example", "example", Permission.build("zenDeskPlugin", "full")),
+//			Route.build("/newPath/json", "json", Permission.build("zenDeskPlugin", "full"))
+//		]
 	}
 
-	/**
-	 * As defined in {@link #getRoutes}, Method will be invoked when /reverseTask/example is requested
-	 * @param model
-	 * @return a simple html response
-	 */
-	def example(ViewModel<String> model) {
-		println model
-		println "user: ${model.user}"
-		return HTMLResponse.success("foo: ${model.user.firstName} ${model.user.lastName}")
-	}
-
-	/**
-	 * As defined in {@link #getRoutes}, Method will be invoked when /reverseTask/json is requested
-	 * @param model
-	 * @return a simple json response
-	 */
-	def json(ViewModel<Map> model) {
-		println model
-		model.object.foo = "fizz"
-		return JsonResponse.of(model.object)
-	}
+//	/**
+//	 * As defined in {@link #getRoutes}, Method will be invoked when /reverseTask/example is requested
+//	 * @param model
+//	 * @return a simple html response
+//	 */
+//	def example(ViewModel<String> model) {
+//		println model
+//		println "user: ${model.user}"
+//		return HTMLResponse.success("foo: ${model.user.firstName} ${model.user.lastName}")
+//	}
+//
+//	/**
+//	 * As defined in {@link #getRoutes}, Method will be invoked when /reverseTask/json is requested
+//	 * @param model
+//	 * @return a simple json response
+//	 */
+//	def json(ViewModel<Map> model) {
+//		println model
+//		model.object.foo = "fizz"
+//		return JsonResponse.of(model.object)
+//	}
 }

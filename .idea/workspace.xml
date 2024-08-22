@@ -4,9 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e34c3647-0650-4c7d-9d58-ae99b568191d" name="Changes" comment="Updated functional for 0.1.0">
+    <list default="true" id="e34c3647-0650-4c7d-9d58-ae99b568191d" name="Changes" comment="Updated for non-hard coded info">
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskOptionSourceProvider.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskOptionSourceProvider.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskTaskController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskTaskController.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskTaskProviderCreateGroup.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskTaskProviderCreateGroup.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskTaskProviderCreateRequest.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskTaskProviderCreateRequest.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskTaskProviderCreateTicket.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskTaskProviderCreateTicket.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskTaskServiceGroup.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskTaskServiceGroup.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskTaskServiceRequest.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskTaskServiceRequest.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskTaskServiceTicket.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/morpheusdata/task/ZenDeskTaskServiceTicket.groovy" afterDir="false" />
     </list>
@@ -94,7 +103,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724164300959</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Updated for non-hard coded info">
+      <option name="closed" value="true" />
+      <created>1724251564612</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1724251564612</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -111,6 +128,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added initial push" />
     <MESSAGE value="Updated functional for 0.1.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated functional for 0.1.0" />
+    <MESSAGE value="Updated for non-hard coded info" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated for non-hard coded info" />
   </component>
 </project>

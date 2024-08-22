@@ -134,8 +134,8 @@ class ZenDeskTaskProviderCreateTicket implements TaskProvider {
 			displayOrder: 3,
 			fieldLabel: 'Priority',
 			required: true,
-			// optionSource: 'zenDeskPriorityTypeList',
-			inputType: OptionType.InputType.TEXT)
+			optionSource: 'zenDeskPriorityTypeList',
+			inputType: OptionType.InputType.SELECT)
 		)
 		optionTypes.add(new OptionType(
 			name: 'zenDeskSubject',
@@ -165,7 +165,7 @@ class ZenDeskTaskProviderCreateTicket implements TaskProvider {
 	 */
 	@Override
 	Icon getIcon() {
-		return new Icon(path:"zenDesk.png", darkPath: "zenDesk.png")
+		return new Icon(path:"zenDeskStandard.png", darkPath: "zenDeskDark.png")
 	}
 
 	@Override

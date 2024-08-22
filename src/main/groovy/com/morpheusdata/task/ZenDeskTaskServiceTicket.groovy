@@ -112,7 +112,7 @@ class ZenDeskTaskServiceTicket extends AbstractTaskService {
 		AccountCredential accountInfo = context.async.accountCredential.list(
 				new DataQuery().withFilter(new DataFilter("id", config.userId)
 				)).blockingFirst()
-		def body = [
+		Map body = [
 			ticket: [
 				comment: [
 				   body: "zenDeskMessageDetails"

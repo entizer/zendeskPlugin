@@ -103,7 +103,7 @@ class ZenDeskTaskServiceGroup extends AbstractTaskService {
 
 		HttpApiClient zenDeskClient = new HttpApiClient()
 		Boolean ignoreSsl = false
-		def body = [
+		Map body = [
 			group: [
 				name: zenDeskGroupName
 			]

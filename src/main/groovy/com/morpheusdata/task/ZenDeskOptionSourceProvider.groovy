@@ -40,10 +40,10 @@ class ZenDeskOptionSourceProvider implements OptionSourceProvider {
 
     def zenDeskPriorityTypeList(args){
         return [
-                [name: 'Low'],
-                [name: 'Normal'],
-                [name: 'High'],
-                [name: 'Urgent']
+                [name: 'Low', value: 'low'],
+                [name: 'Normal', value: 'medium'],
+                [name: 'High', value: 'high'],
+                [name: 'Urgent', value: 'urgent']
         ]
     }
 }

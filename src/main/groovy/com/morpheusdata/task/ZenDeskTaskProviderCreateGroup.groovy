@@ -143,7 +143,7 @@ class ZenDeskTaskProviderCreateGroup implements TaskProvider {
 	 */
 	@Override
 	Icon getIcon() {
-		return new Icon(path:"zenDesk.png", darkPath: "zenDesk.png")
+		return new Icon(path:"zenDeskStandard.png", darkPath: "zenDeskDark.png")
 	}
 
 	@Override
